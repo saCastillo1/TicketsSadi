@@ -1,0 +1,66 @@
+/* =========================================================
+   Tickets Sadi - hoja de estilos (esqueleto)
+   ========================================================= */
+:root{
+	--color_Morado: #5B2A86;
+	--color_Rosa: #E8467C;
+	--color_Oscuro: #1B1530;
+	--color_Fondo: #F6F4FA;
+	--color_Gris: #8A84A3;
+}
+
+body{
+	background-color: var(--color_Fondo);
+	color: var(--color_Oscuro);
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+main{
+	flex: 1;
+	padding-bottom: 3rem;
+	padding-top: 1.5rem;
+}
+
+/* barra de navegación */
+.barra_Menu{
+	background: linear-gradient(90deg, var(--color_Morado), var(--color_Rosa));
+}
+
+/* encabezado de cada módulo */
+.encabezado_Modulo{
+	background: #FFFFFF;
+	border-left: 6px solid var(--color_Rosa);
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+	margin-bottom: 1.5rem;
+	padding: 1.25rem 1.5rem;
+}
+
+/* caja genérica */
+.caja_Blanca{
+	background: #FFFFFF;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+	height: 100%;
+	padding: 1.5rem;
+}
+
+/* bloque "pendiente de implementar" */
+.bloque_Pendiente{
+	border: 2px dashed #D6D1E6;
+	border-radius: 12px;
+	color: var(--color_Gris);
+	margin-top: 1rem;
+	padding: 1.25rem;
+	text-align: center;
+}
+
+footer{
+	background-color: var(--color_Oscuro);
+	color: #CFC8E8;
+	font-size: 0.85rem;
+	padding: 1rem 0;
+	text-align: center;
+}
