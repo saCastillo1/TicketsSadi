@@ -8,3 +8,7 @@ node_modules/
 # Variables de entorno
 .env
 .env.*
+
+.firebase/
+firebase-debug.log*
+node_modules/

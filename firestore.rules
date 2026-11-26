@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // TEMPORAL: permite escribir sin iniciar sesión mientras se termina el módulo de Usuarios.
+    // Se reemplaza por validación de rol en el segundo 50% del proyecto.
+    function abierto_Temporal() {
+      return request.time < timestamp.date(2026, 12, 10);
+    }
+
+    // ----------------------------- LUGARES (Diana) -----------------------------
+    match /lugares/{lugar_Id} {
+      allow read: if true;
+      allow create: if abierto_Temporal() && lugar_Valido() &&
+                       request.resource.data.fecha_Creacion == request.time;
+      allow update: if abierto_Temporal() && lugar_Valido();
+      allow delete: if abierto_Temporal();
+
+      function lugar_Valido() {
+        let d = request.resource.data;
+        return d.nombre is string && d.nombre.size() > 0 &&
+               d.provincia in ['San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'] &&
+               d.direccion is string &&
+               d.capacidad is int && d.capacidad > 0;
+      }
+    }
+
+    // ----------------------------- EVENTOS (Diana) -----------------------------
+    match /eventos/{evento_Id} {
+      allow read: if true;
+      allow create: if abierto_Temporal() && evento_Valido() &&
+                       request.resource.data.fecha_Creacion == request.time;
+      allow update: if abierto_Temporal() && evento_Valido();
+      allow delete: if abierto_Temporal();
+
+      function evento_Valido() {
+        let d = request.resource.data;
+        return d.nombre is string && d.nombre.size() > 0 &&
+               d.categoria in ['Concierto', 'Festival', 'Deporte', 'Otro'] &&
+               d.lugar_Id is string &&
+               d.lugar_Nombre is string &&
+               d.fecha_Evento is timestamp &&
+               d.descripcion is string &&
+               d.estado in ['Próximo', 'Agotado', 'Finalizado', 'Cancelado'];
+      }
+    }
+
+  }
+}
